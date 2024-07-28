@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="CamC@ad-database.cjo66a2aoqcq.ap-southeast-1.rds.amazonaws.com" uuid="ac1d75b6-779a-478f-a18b-7eb3ca7087d9">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://ad-database.cjo66a2aoqcq.ap-southeast-1.rds.amazonaws.com:3306/CamC</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>
