@@ -14,6 +14,8 @@ from matplotlib import pyplot as plt
 
 import pickle
 
+import pymysql
+
 import camera_preprocessing
 
 pd.set_option('display.max_columns', None)
@@ -24,9 +26,24 @@ RESET = '\033[0m'
 """
 Data
 """
-df = pd.read_excel("Models.xlsx")
+db = pymysql.connect(
+        host='ad-database.cjo66a2aoqcq.ap-southeast-1.rds.amazonaws.com', port=3306,
+        user='admin', passwd='lushuwen',
+        db='CamC', charset='utf8')
+cursor = db.cursor()
+
+sql = '''select * from camera'''
+cursor.execute(sql)
+result = cursor.fetchall()
+columns = cursor.description
+cursor.close()
+db.close()
+cols = [col[0] for col in columns]
+df = pd.DataFrame(result, columns=cols)
+df.drop(columns=['id'], inplace=True)
+df.drop(columns=['description'], inplace=True)
+
 df_origin = df.copy()
-# print(df)
 
 df = camera_preprocessing.camera_preprocessing(df)
 
@@ -96,8 +113,6 @@ with open('models/scaler.pickle', 'wb') as f:
 with open('models/pca.pickle', 'wb') as f:
     pickle.dump(pca, f)
 
-# df_pca = pca.fit_transform(df_onehot)
-#
 # explained_variance_ratio = pca.explained_variance_ratio_
 # print("Cumulative Explained Variance Ratio: ", explained_variance_ratio)
 # print(explained_variance_ratio.cumsum())
@@ -128,6 +143,6 @@ with open('models/centers.pickle', 'wb') as f:
 # colors = ['red', 'yellow', 'green', 'blue', 'magenta']
 # cmap = ListedColormap(colors)
 # plt.figure(figsize=(12, 8))
-# plt.scatter(df_pca[:, 0], df_pca[:, 1], c=row_cluster_map, cmap=cmap)
+# plt.scatter(df_pca[:, 0], df_pca[:, 1], c=labels, cmap=cmap)
 # plt.title("Hierarchical Clustering")
 # plt.show()
