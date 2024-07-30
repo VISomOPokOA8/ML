@@ -44,6 +44,7 @@ def camera_clustering(id):
     # PCA
     with open('models/pca.pickle', 'rb') as f:
         pca = pickle.load(f)
+    camera_scaled = camera_scaled.drop(['id'])
     camera_pca = pca.transform(camera_scaled)
     # print(camera_pca)
 

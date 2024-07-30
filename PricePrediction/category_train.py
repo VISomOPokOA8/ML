@@ -100,9 +100,9 @@ standard = MinMaxScaler()
 df_scaled = df_onehot.copy()
 columns = ['initial_price', 'effective_pixel', 'focus_point', 'continuous_shot']
 df_scaled[columns] = standard.fit_transform(df_onehot[columns])
-# print(f"{RED}The scaled data: {RESET}")
-# print(df_scaled)
-# print('\n')
+print(f"{RED}The scaled data: {RESET}")
+print(df_scaled)
+print('\n')
 
 pca = PCA(n_components=6)
 df_pca = pca.fit_transform(df_scaled)
@@ -113,10 +113,10 @@ with open('models/scaler.pickle', 'wb') as f:
 with open('models/pca.pickle', 'wb') as f:
     pickle.dump(pca, f)
 
-# explained_variance_ratio = pca.explained_variance_ratio_
-# print("Cumulative Explained Variance Ratio: ", explained_variance_ratio)
-# print(explained_variance_ratio.cumsum())
-# print('\n')
+explained_variance_ratio = pca.explained_variance_ratio_
+print("Cumulative Explained Variance Ratio: ", explained_variance_ratio)
+print(explained_variance_ratio.cumsum())
+print('\n')
 
 # Loading
 # loading = pca.components_.T * np.sqrt(pca.explained_variance_)

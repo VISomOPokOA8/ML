@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 import pymysql
 
@@ -87,6 +88,8 @@ group2_price = group2_price.sort_index()
 group3_price = group3_price.sort_index()
 group4_price = group4_price.sort_index()
 
+# VAR
+
 group1_price = group1_price.interpolate(method='linear')
 group2_price = group2_price.interpolate(method='linear')
 group3_price = group3_price.interpolate(method='linear')
@@ -96,12 +99,13 @@ group1_price = group1_price.ffill().bfill()
 group2_price = group2_price.ffill().bfill()
 group3_price = group3_price.ffill().bfill()
 group4_price = group4_price.ffill().bfill()
-
+'''
 group1_price.to_csv('price/group1_price.csv', index=True)
 group2_price.to_csv('price/group2_price.csv', index=True)
 group3_price.to_csv('price/group3_price.csv', index=True)
 group4_price.to_csv('price/group4_price.csv', index=True)
 
+'''
 #删除常数列
 group1_price_clean = group1_price.drop(columns=[11])
 
@@ -109,3 +113,13 @@ var_model = VAR(group1_price_clean)
 
 results = var_model.fit(maxlags=4)
 print(results.summary())
+
+
+forecast_data = np.array([
+        [1.05, 1.05, 1.05, 1.05, 1.05],
+        [1.05, 1.05, 1.05, 1.05, 1.05],
+        [1.05, 1.05, 1.05, 1.05, 1.05],
+        [1.05, 1.05, 1.05, 1.05, 1.05]
+])
+forecast = results.forecast(forecast_data, steps=10)
+print(forecast)

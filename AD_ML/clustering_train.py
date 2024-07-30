@@ -1,6 +1,9 @@
 import pandas as pd
 import pickle
 import pymysql
+from matplotlib import pyplot as plt
+from matplotlib.colors import ListedColormap
+from scipy.cluster.hierarchy import dendrogram, linkage
 from sklearn.cluster import AgglomerativeClustering
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import MinMaxScaler
@@ -58,10 +61,14 @@ print("\n")
 PCA
 '''
 pca = PCA(n_components=6)
+cameras_scaled = cameras_scaled.drop(columns=['id'])
 cameras_pca = pca.fit_transform(cameras_scaled)
 with open('models/pca.pickle', 'wb') as f:
     pickle.dump(pca, f)
 print(f"{RED}PCA: {RESET}")
+print("Explained variance explained:")
+print(pca.explained_variance_ratio_.cumsum())
+print("\n")
 print(cameras_pca)
 print("\n")
 
