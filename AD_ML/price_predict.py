@@ -40,12 +40,16 @@ def price_predict(id):
 
     prices = model.predict(dates_arr)
 
-    date_prices = pd.DataFrame({'date': dates, 'price': prices})
-    release_date = pd.to_datetime(release_date)
-    date_prices['date'] = pd.to_datetime(release_date) + pd.to_timedelta(date_prices['date'], unit='D')
-    date_prices['price'] = prices * initial_price
+    dates_list = []
+    for i in range(len(dates)):
+        dates_list.append(pd.to_datetime(release_date + timedelta(dates[i])).strftime("%Y-%m-%d"))
 
-    json_data = date_prices.to_json(orient='records', lines=True)
-    print(json_data)
+    prices_list = []
+    for i in range(len(prices)):
+        prices_list.append(initial_price * prices[i])
+
+    date_prices = {dates_list: prices_list for dates_list, prices_list in zip(dates_list, prices_list)}
+
+    print(date_prices)
 
     return date_prices
