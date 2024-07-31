@@ -1,9 +1,8 @@
 from datetime import datetime
-
+from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
 import pymysql
-from matplotlib import pyplot as plt
 from skimage.metrics import mean_squared_error
 from sklearn.metrics import r2_score
 from sklearn.linear_model import LinearRegression

@@ -61,7 +61,6 @@ print("\n")
 PCA
 '''
 pca = PCA(n_components=6)
-cameras_scaled = cameras_scaled.drop(columns=['id'])
 cameras_pca = pca.fit_transform(cameras_scaled)
 with open('models/pca.pickle', 'wb') as f:
     pickle.dump(pca, f)

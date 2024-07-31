@@ -4,7 +4,7 @@ from sklearn.preprocessing import OneHotEncoder
 
 def camera_preprocessing(df):
     df = df.fillna(0)
-    df = df.drop(['description', 'model', 'release_time'], axis=1)
+    df = df.drop(['id', 'description', 'model', 'release_time'], axis=1)
 
     '''
     Classification

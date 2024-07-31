@@ -1,5 +1,5 @@
-import numpy as np
 import pandas as pd
+import pickle
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.svm import SVR
@@ -33,14 +33,13 @@ for i in range(4):
     best_model = grid_search.best_estimator_
     y_pred = best_model.predict(x_test)
 
+    with open(f'models/predict/{i}.pickle', 'wb') as f:
+        pickle.dump(best_model, f)
+
     # Mean squared error
     mse = mean_squared_error(y_test, y_pred)
     print(f'Mean squared error for group {i}: {mse}')
     print('\n')
-
-    # Predicting new values
-    new_dates = np.array([4000, 5000, 6000]).reshape(-1, 1)
-    new_predictions = best_model.predict(new_dates)
 
     # Sorting data
     df_test = pd.DataFrame({'date': x_test.squeeze(), 'price': y_test})
@@ -53,7 +52,6 @@ for i in range(4):
     plt.subplot(2, 2, i + 1)
     plt.plot(df_test['date'], df_test['price'], label='Actual Price')
     plt.plot(df_predict['date'], df_predict['price_predict'], label='Predicted Price')
-    plt.scatter(new_dates, new_predictions, color='red', marker='x', label='New Predictions')
     plt.xlabel('Date / days')
     plt.ylabel('Price')
     plt.title(f'SVR Regression for Group {i}')
